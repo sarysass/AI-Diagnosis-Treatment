@@ -1,0 +1,56 @@
+/* css/welcome.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../assets/images/doctor-gesture.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    opacity: 0; /* 初始为0，由global.js在DOMContentLoaded后设为1 */
+}
+
+.welcome-container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 80%;
+    margin-top: 60px;
+}
+
+.welcome-container h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.start-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 40px;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #87cefa;
+    border: none;
+    border-radius: 20px;
+}
+
+.start-btn:hover {
+    background-color: #4682b4;
+    color: #87cefa;
+}
+
+.loading {
+    display: none;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #666;
+}
+
+.doctor-gesture {
+    font-size: 5rem;
+    margin-top: 30px;
+    animation: gestureBounce 1s infinite;
+}

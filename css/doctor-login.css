@@ -1,0 +1,77 @@
+/* css/doctor-login.css */
+body {
+    background-color: #e6f7ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.9);
+    width: 400px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.login-container h1 {
+    margin: 0 0 20px;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.login-container p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #87cefa;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: #4682b4;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #87cefa;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.login-btn:hover {
+    background-color: #4682b4;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    display: none;
+}
