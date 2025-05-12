@@ -1,0 +1,37 @@
+/* css/global.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: opacity 1s ease; /* 全局淡入淡出 */
+}
+
+/* 通用按钮样式 */
+button {
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* 通用盒子阴影与圆角及尺寸设置 */
+.common-box {
+    background: rgba(255, 255, 255, 0.9);
+    width: 63%;
+    height: 90%;
+    margin-top: 2%;
+    margin-right: 3%;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* 改为可滚动，以便内容过多时可下拉查看 */
+}
+
+/* 通用动画定义 */
+@keyframes gestureBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}

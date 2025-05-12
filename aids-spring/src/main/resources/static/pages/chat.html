@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 聊天页面</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/chat.css">
+    <style>
+        /* 确保modal默认隐藏 */
+        .modal {
+            display: none; /* 默认隐藏 */
+            /* 其他样式，如背景色、边框等 */
+        }
+    </style>
+</head>
+<body>
+<div class="chat-container common-box">
+    <div class="chat-messages" id="chat-messages">
+        <div class="chat-bubble ai">您好，我是AI医生，请问有什么可以帮助您的？</div>
+    </div>
+    <div class="chat-input-container">
+        <button class="voice-btn" id="voice-btn">🎤</button>
+        <input type="text" class="chat-input" id="chat-input" placeholder="请输入文字，我很愿意帮忙">
+        <button class="send-btn" id="send-btn">发送</button>
+    </div>
+    <div id="error-message" style="color: red; display: none;"></div> <!-- 错误消息区域 -->
+</div>
+
+<div class="modal" id="diagnosis-modal">
+    <h2>诊断结束</h2>
+    <p>您的诊断已完成，点击下方按钮查看诊断结果。</p>
+    <a href="diagnosis.html">查看诊断结果</a>
+    <button id="close-modal">关闭</button> <!-- 关闭按钮 -->
+</div>
+
+<script src="../js/global.js"></script>
+<script src="../js/chat.js"></script>
+<script>
+    // 关闭modal的功能
+    document.getElementById('close-modal').addEventListener('click', () => {
+        document.getElementById('diagnosis-modal').style.display = 'none';
+    });
+</script>
+</body>
+</html>

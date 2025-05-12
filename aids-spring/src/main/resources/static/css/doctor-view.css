@@ -1,0 +1,189 @@
+/* doctor-view.css */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    display: flex;
+    height: 100vh;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.sidebar {
+    width: 13%;
+    background: #f9f9f9;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease, padding 0.3s ease;
+    position: relative;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0;
+    border-bottom: 2px solid #87cefa;
+    padding-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.toggle-sidebar-btn, .expand-sidebar-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.expand-sidebar-btn {
+    position: absolute;
+    top: 20px;  /* 与toggle按钮在同一高度 */
+    left: 5px;
+    display: none; /* 默认隐藏，通过collapsed状态显示 */
+}
+
+/* 收窄状态 */
+.sidebar.collapsed {
+    width: 30px;
+    padding: 20px 5px;
+}
+
+/* 收窄后隐藏除还原按钮以外的内容 */
+.sidebar.collapsed .sidebar-header,
+.sidebar.collapsed .date-item {
+    display: none;
+}
+
+.sidebar.collapsed .toggle-sidebar-btn {
+    display: none;
+}
+
+/* 在collapsed状态下显示expand按钮 */
+.sidebar.collapsed .expand-sidebar-btn {
+    display: block;
+}
+
+.date-item {
+    margin-bottom: 10px;
+}
+
+.date-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #f0f8ff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 5px;
+}
+
+.date-toggle:hover {
+    background: #d0e8ff;
+}
+
+.record-item span {
+    font-size: 1rem;
+    color: #333;
+}
+
+.record-item .arrow {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.patient-list {
+    margin-left: 10px;
+    display: none;
+}
+
+.patient-item {
+    padding: 8px 10px;
+    background: #ffffff;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.patient-item:hover {
+    background: #e6f7ff;
+}
+
+.patient-item.selected {
+    background: #b4f0b4;
+}
+
+.content {
+    flex: 1;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.content-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    background: #fff;
+    padding-right: 10px;
+}
+
+.content-section {
+    background: #e6f7ff;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.content-section h2 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.content-section p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.link-btn {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #4682b4;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.link-btn:hover {
+    text-decoration: underline;
+}
+
+.save-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #87cefa;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+    background-color: #4682b4;
+}

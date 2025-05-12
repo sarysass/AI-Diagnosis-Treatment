@@ -1,0 +1,83 @@
+/* css/personal-info.css */
+body {
+    background-image: url('../assets/images/personal-info.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100vh;
+    opacity: 0; 
+    transition: opacity 1s ease;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px 40px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    text-align: center;
+    margin-bottom: 30px;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.form-container h1 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #87cefa;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: #4682b4;
+}
+
+textarea {
+    resize: none;
+    height: 60px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #87cefa;
+    border: none;
+    border-radius: 20px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #4682b4;
+}
+
+input[type="text"], textarea, select {
+    font-size: 1rem; 
+    font-family: Arial, sans-serif; /* 确保一致的字体 */
+}
