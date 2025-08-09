@@ -1,8 +1,10 @@
 package com.example.aidsspring.controller;
 
+import com.example.aidsspring.entity.ApiResponse;
 import com.example.aidsspring.entity.ChatData;
 import com.example.aidsspring.service.NbAPIService;
 import com.example.aidsspring.service.NbAPIService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +15,16 @@ import java.util.Map;
 public class ChatController {
 
     private final NbAPIService apiService;
+    @Autowired
+    private NbAPIService nbAPIService;
 
     public ChatController(NbAPIService apiService) {
         this.apiService = apiService;
     }
     @PostMapping("/data")
-    public ResponseEntity<String> handleRequest(@RequestBody Map<String, String> requestBody) {
-        String id = requestBody.get("id");
-        String msgFree = requestBody.get("msgFree");
-        String response = apiService.processRequest(id, msgFree);
-        return ResponseEntity.ok(response);
+    public ApiResponse chat(@RequestBody Map<String, String> payload) {
+        String userId = payload.get("id");
+        String msg = payload.get("msgFree");
+        return nbAPIService.processRequest(userId, msg);
     }
 }

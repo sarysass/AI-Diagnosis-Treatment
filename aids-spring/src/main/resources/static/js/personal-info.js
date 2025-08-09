@@ -46,7 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-            const response = await fetch('http://localhost:8888/AddPatients', {
+            console.log("personal-info.js: Attempting fetch with window.BASE_URL:", window.BASE_URL);
+            const response = await fetch(`${window.BASE_URL}/AddPatients`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

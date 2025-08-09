@@ -7,6 +7,7 @@ import com.alibaba.dashscope.exception.ApiException;
 import com.alibaba.dashscope.exception.InputRequiredException;
 import com.alibaba.dashscope.exception.NoApiKeyException;
 
+import com.example.aidsspring.entity.ApiResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,7 +19,7 @@ public class NbAPIService {
 //    private static final Logger logger = LoggerFactory.getLogger(NbAPIService.class);
 
     // 你的阿里百炼应用ID
-    private static final String APP_ID = "a3617ab00d80454bada45a88ccf13a35";
+    private static final String APP_ID = "0be01e06487d4071b9312dff372cfe83";
 
     // 你的API Key，建议从环境变量读取
     private static final String API_KEY = "sk-8f645201fae149e088c76b28e46008cb";
@@ -29,14 +30,34 @@ public class NbAPIService {
     private final ConcurrentMap<String, String> sessionMap = new ConcurrentHashMap<>();
 
     /**
+     * 解析形如 "(1) 你好，有什么可以帮你的。" 格式的文本，提取状态码和文本
+     */
+    public static class ParsedResponse {
+        private final int status;
+        private final String text;
+
+        public ParsedResponse(int status, String text) {
+            this.status = status;
+            this.text = text;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public String getText() {
+            return text;
+        }
+    }
+
+    /**
      * 处理用户请求，实现多用户多轮对话
      * @param userId 用户唯一标识，比如用户ID或token
      * @param prompt 用户输入文本
-     * @return 智能体回复文本
+     * @return 只返回解析后的纯文本回复（不带状态码）
      */
-    public String processRequest(String userId, String prompt) {
+    public ApiResponse processRequest(String userId, String prompt) {
         try {
-            // 获取该用户当前的sessionId，首次调用时为null
             String sessionId = sessionMap.get(userId);
 
             ApplicationParam param = ApplicationParam.builder()
@@ -47,15 +68,40 @@ public class NbAPIService {
                     .build();
 
             ApplicationResult result = application.call(param);
-
-            // 更新该用户的sessionId，保证多轮对话
             sessionMap.put(userId, result.getOutput().getSessionId());
 
-            return result.getOutput().getText();
+            String rawText = result.getOutput().getText();
+            ParsedResponse parsed = parseResponse(rawText);
+            System.out.println("rawText:"+rawText);
+            return new ApiResponse(parsed.getStatus(), parsed.getText());
 
         } catch (ApiException | NoApiKeyException | InputRequiredException e) {
-
             throw new RuntimeException("调用阿里百炼API异常", e);
+        }
+    }
+
+    /**
+     * 解析形如 "(1) 你好，有什么可以帮你的。" 格式的文本，提取状态码和文本
+     * @param rawText 原始返回文本
+     * @return 包含状态码和纯文本的ParsedResponse对象
+     */
+    private ParsedResponse parseResponse(String rawText) {
+        if (rawText == null) {
+            return new ParsedResponse(0, "");
+        }
+
+        // 正则匹配开头的 (数字)
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("^\\((\\d)\\)\\s*(.*)$", java.util.regex.Pattern.DOTALL);
+        java.util.regex.Matcher matcher = pattern.matcher(rawText);
+
+        if (matcher.find()) {
+            int status = Integer.parseInt(matcher.group(1));
+            System.out.println("status:"+status);
+            String text = matcher.group(2);
+            return new ParsedResponse(status, text);
+        } else {
+            // 如果不匹配，默认状态0，返回原始文本
+            return new ParsedResponse(0, rawText);
         }
     }
 
