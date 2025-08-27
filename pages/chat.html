@@ -17,7 +17,7 @@
 <body>
 <div class="chat-container common-box">
     <div class="chat-messages" id="chat-messages">
-        <div class="chat-bubble ai">您好，我是AI医生，请问有什么可以帮助您的？</div>
+        <div class="chat-bubble ai">您好，欢迎来到宁波市江北区外滩街道社区卫生服务中心！我是AI医生，请问有什么可以帮助您的？</div>
     </div>
     <div class="chat-input-container">
         <button class="voice-btn" id="voice-btn">🎤</button>
@@ -27,12 +27,20 @@
     <div id="error-message" style="color: red; display: none;"></div> <!-- 错误消息区域 -->
 </div>
 
-<div class="modal" id="diagnosis-modal">
-    <h2>诊断结束</h2>
-    <p>您的诊断已完成，点击下方按钮查看诊断结果。</p>
-    <a href="diagnosis.html">查看诊断结果</a>
-    <button id="close-modal">关闭</button> <!-- 关闭按钮 -->
+<div class="modal" id="diagnosis-modal" style="display:none; position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); background: white; padding: 20px 30px; border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h2 style="text-align: center; margin-bottom: 20px;">诊断结束</h2>
+    <table id="diagnosis-content" style="width: 100%; border-collapse: collapse; font-size: 14px; color: #333;">
+        <!-- JS 动态填充 -->
+    </table>
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="close-modal" style="padding: 6px 16px; font-size: 14px; border: none; background-color: #007bff; color: white; border-radius: 6px; cursor: pointer;">关闭</button>
+    </div>
 </div>
+
+<!-- 遮罩层 -->
+
 
 <script src="../js/global.js"></script>
 <script src="../js/chat.js"></script>

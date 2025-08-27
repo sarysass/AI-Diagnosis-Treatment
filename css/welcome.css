@@ -50,7 +50,41 @@ body {
 }
 
 .doctor-gesture {
-    font-size: 5rem;
+    font-size: 4rem;
     margin-top: 30px;
     animation: gestureBounce 1s infinite;
+}
+/* 底部版权/单位信息（覆盖在背景图上，始终贴底显示） */
+.home-footer.fixed{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 99;
+  padding: 12px 12px calc(12px + env(safe-area-inset-bottom)); /* 兼容刘海屏 */
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255,255,255,.96);
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);              /* 提高可读性 */
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%,
+                                       rgba(0,0,0,.25) 70%); /* 轻遮罩 */
+  backdrop-filter: blur(2px);
+}
+.home-footer .footer-inner{ max-width: 1200px; margin: 0 auto; }
+.home-footer .sep{ margin: 0 .6em; opacity: .9; }
+
+/* 兼容小屏 */
+@media (max-width: 640px){
+  .home-footer.fixed{ font-size: 12px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom)); }
+}
+
+/* 避免底部遮住内容：给中间卡片一点下边距（可按视觉调） */
+.welcome-container{ margin-bottom: 70px; }
+
+.system-info {
+    font-size: 1.28rem;       /* 字体略小于标题 */
+    color: #666;             /* 深灰，更清晰 */
+    margin-top: 15px;        /* 与手势保持间距 */
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.4;
 }

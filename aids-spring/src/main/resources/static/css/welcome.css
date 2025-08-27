@@ -50,7 +50,7 @@ body {
 }
 
 .doctor-gesture {
-    font-size: 5rem;
+    font-size: 4rem;
     margin-top: 30px;
     animation: gestureBounce 1s infinite;
 }
@@ -79,3 +79,12 @@ body {
 
 /* 避免底部遮住内容：给中间卡片一点下边距（可按视觉调） */
 .welcome-container{ margin-bottom: 70px; }
+
+.system-info {
+    font-size: 1.28rem;       /* 字体略小于标题 */
+    color: #666;             /* 深灰，更清晰 */
+    margin-top: 15px;        /* 与手势保持间距 */
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.4;
+}
