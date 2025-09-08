@@ -11,11 +11,16 @@
     <!-- 左侧边栏 -->
     <div class="sidebar">
         <div class="sidebar-header">
-            <h2>AI 智能问诊系统</h2>
-            <button class="toggle-sidebar-btn">⏴</button>
+            <!-- 新增：上传按钮（位于标题上方） -->
+            <button class="upload-open-btn" title="上传模型训练文件">上传训练文件</button>
+
+            <!-- 轻微改动：标题与收窄按钮放同一行 -->
+            <div class="header-row">
+                <h2>AI 智能问诊系统</h2>
+                <button class="toggle-sidebar-btn">⏴</button>
+            </div>
         </div>
 
-        <!-- 不再内联style控制显示隐藏，交给CSS -->
         <button class="expand-sidebar-btn">⏵</button>
 
         <div class="date-item">
@@ -80,6 +85,25 @@
             </div>
         </div>
     </div>
+
+    <!-- 新增：上传弹窗与遮罩（默认隐藏） -->
+    <div class="modal" id="upload-modal" aria-hidden="true">
+        <div class="modal-header">
+            <h3>模型训练文件上传</h3>
+            <button class="modal-close-btn" id="upload-close-btn" aria-label="关闭">✕</button>
+        </div>
+        <p class="caption">支持 .zip / .tar.gz / .csv / .json 等，单文件上限由后端配置。</p>
+        <div class="upload-toolbar">
+            <input type="file" id="model-file" multiple />
+            <button id="upload-btn" class="save-btn">开始上传</button>
+        </div>
+        <div id="dropzone" class="dropzone">将文件拖拽到此处，或使用上方按钮选择</div>
+        <div class="upload-list-wrap">
+            <h4 style="margin:10px 0 8px;color:#333">已选/已上传文件</h4>
+            <div id="upload-list" class="upload-list"></div>
+        </div>
+    </div>
+    <div class="modal-mask" id="upload-mask" aria-hidden="true"></div>
 
     <script src="../js/global.js"></script>
     <script src="../js/doctor-view.js"></script>

@@ -78,4 +78,99 @@ document.addEventListener("DOMContentLoaded", () => {
         // 模拟保存操作
         alert('诊断信息已保存：' + diagnosisText);
     });
+
+    /* ===== 新增：上传弹窗与上传逻辑（最小追加） ===== */
+    const openBtn  = document.querySelector('.upload-open-btn');
+    const modal    = document.getElementById('upload-modal');
+    const mask     = document.getElementById('upload-mask');
+    const closeBtn = document.getElementById('upload-close-btn');
+
+    function openModal(){ modal?.classList.add('show'); mask?.classList.add('show'); }
+    function closeModal(){ modal?.classList.remove('show'); mask?.classList.remove('show'); }
+
+    openBtn?.addEventListener('click', openModal);
+    closeBtn?.addEventListener('click', closeModal);
+    mask?.addEventListener('click', closeModal);
+
+    // 简单上传：选择/拖拽/进度
+    const fileInput = document.getElementById('model-file');
+    const uploadBtn = document.getElementById('upload-btn');
+    const dropzone  = document.getElementById('dropzone');
+    const list      = document.getElementById('upload-list');
+
+    let filesToUpload = [];
+    let uploadedFiles = [];
+
+    function renderList(){
+      if(!list) return;
+      list.innerHTML = '';
+      filesToUpload.forEach((f,idx)=>{
+        const item = document.createElement('div');
+        item.className = 'upload-item';
+        item.innerHTML = `
+          <div class="name">${f.name}</div>
+          <div class="meta">${(f.size/1024/1024).toFixed(2)} MB</div>
+          <div class="progress-wrap"><div class="progress-bar" id="pb-${idx}"></div></div>
+          <div class="status" id="st-${idx}"></div>`;
+        list.appendChild(item);
+      });
+      uploadedFiles.forEach(f=>{
+        const item = document.createElement('div');
+        item.className = 'upload-item';
+        item.innerHTML = `
+          <div class="name">${f.name}</div>
+          <div class="meta">${(f.size/1024/1024).toFixed(2)} MB</div>
+          <div class="${f.status==='ok'?'upload-ok':'upload-fail'}">${f.status==='ok'?'已上传':'失败'}</div>`;
+        list.appendChild(item);
+      });
+    }
+
+    fileInput?.addEventListener('change', e=>{
+      filesToUpload = Array.from(e.target.files||[]);
+      renderList();
+    });
+
+    ['dragenter','dragover'].forEach(evt=>dropzone?.addEventListener(evt,e=>{
+      e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover');
+    }));
+    ['dragleave','drop'].forEach(evt=>dropzone?.addEventListener(evt,e=>{
+      e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover');
+    }));
+    dropzone?.addEventListener('drop', e=>{
+      filesToUpload = filesToUpload.concat(Array.from(e.dataTransfer.files||[]));
+      renderList();
+    });
+
+    uploadBtn?.addEventListener('click', async()=>{
+      if(!filesToUpload.length){ alert('请先选择文件'); return; }
+      for(const f of filesToUpload){ await uploadOne(f); }
+      filesToUpload = []; renderList();
+    });
+
+    function uploadOne(file){
+      return new Promise((resolve)=>{
+        const idx = filesToUpload.indexOf(file);
+        const pb  = document.getElementById(`pb-${idx}`);
+        const st  = document.getElementById(`st-${idx}`);
+
+        const form = new FormData(); form.append('file', file);
+        const xhr = new XMLHttpRequest();
+        // 若后端不同源/端口，请改为完整地址，如：http://localhost:3001/api/upload/model
+        xhr.open('POST', '/api/upload/model', true);
+
+        xhr.upload.onprogress = e=>{
+          if(e.lengthComputable && pb){ pb.style.width = (e.loaded/e.total*100).toFixed(0)+'%'; }
+        };
+        xhr.onreadystatechange = ()=>{
+          if(xhr.readyState===4){
+            const ok = xhr.status>=200 && xhr.status<300;
+            st && (st.innerHTML = ok ? '<span class="upload-ok">上传成功</span>' : `<span class="upload-fail">上传失败：${xhr.status}</span>`);
+            uploadedFiles.unshift({name:file.name,size:file.size,status:ok?'ok':'fail'});
+            resolve();
+          }
+        };
+        xhr.onerror = ()=>{ st && (st.innerHTML = '<span class="upload-fail">网络错误</span>'); uploadedFiles.unshift({name:file.name,size:file.size,status:'fail'}); resolve(); };
+        xhr.send(form);
+      });
+    }
 });
