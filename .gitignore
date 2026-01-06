@@ -1,1 +1,20 @@
 .vscode/
+
+# IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Java & Maven
+**/target/
+build/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Local database and logs
+aids-spring/aids.db
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
