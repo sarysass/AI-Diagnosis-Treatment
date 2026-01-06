@@ -18,6 +18,8 @@ body {
     flex-direction: column;
     transition: width 0.3s ease, padding 0.3s ease;
     position: relative;
+    overflow-y: auto; /* 允许滚动 */
+    max-height: 100vh;
 }
 
 .sidebar-header {

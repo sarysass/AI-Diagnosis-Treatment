@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const age = document.getElementById('age').value.trim();
         const gender = document.getElementById('gender').value;
         const contact = document.getElementById('contact').value.trim();
-        // const symptoms = document.getElementById('symptoms').value.trim(); // 不作必填要求
+        const symptoms = document.getElementById('symptoms').value.trim(); // 捕获症状
 
         // 验证逻辑
         if (!name) {
@@ -35,14 +35,18 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        // 获取当前日期 (YYYY-MM-DD)
+        const today = new Date().toISOString().split('T')[0];
+
         // 创建一个患者对象
         const patientData = {
             name: name,
             age: parseInt(age, 10),
             gender: gender,
             tel: contact,
-            diagnosisid: null, // 根据需要填写
-            info: null // 根据需要填写
+            diagnosisid: null,
+            info: symptoms, // 将症状存入 info 字段
+            diagnosisDate: today // 设置问诊日期
         };
 
         try {

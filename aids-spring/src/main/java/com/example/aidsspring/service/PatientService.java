@@ -5,6 +5,8 @@ import com.example.aidsspring.mapper.PatientMapper; // 假设你有一个 Patien
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientService {
     @Autowired
@@ -13,5 +15,17 @@ public class PatientService {
     public void savePatient(PatientData patient) {
         // 插入患者数据
         patientMapper.insertPatient(patient); // 确保这个方法能返回自增的id
+    }
+
+    public List<PatientData> getAllPatients() {
+        return patientMapper.selectAllPatients();
+    }
+
+    public void updatePatient(PatientData patient) {
+        patientMapper.updatePatient(patient);
+    }
+
+    public void updateAiDiagnosis(Integer id, String aiDiagnosis) {
+        patientMapper.updateAiDiagnosis(id, aiDiagnosis);
     }
 }

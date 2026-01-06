@@ -1,7 +1,11 @@
-.vscode/
+# OS
+.DS_Store
+Thumbs.db
+*.swp
 
 # IDEs
 .idea/
+.vscode/
 *.iml
 *.iws
 *.ipr
@@ -9,12 +13,19 @@
 # Java & Maven
 **/target/
 build/
+mvnw
+mvnw.cmd
+.mvn/
 !.mvn/wrapper/maven-wrapper.jar
 
 # Local database and logs
 aids-spring/aids.db
 *.log
+*.sqlite
 
-# OS
-.DS_Store
-Thumbs.db
+# Data and Scripts
+data/
+*.xlsx
+*.sh
+*.conf
+Dockerfile

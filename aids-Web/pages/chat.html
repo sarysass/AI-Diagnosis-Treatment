@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,46 +10,52 @@
     <style>
         /* 确保modal默认隐藏 */
         .modal {
-            display: none; /* 默认隐藏 */
+            display: none;
+            /* 默认隐藏 */
             /* 其他样式，如背景色、边框等 */
         }
     </style>
 </head>
-<body>
-<div class="chat-container common-box">
-    <div class="chat-messages" id="chat-messages">
-        <div class="chat-bubble ai">您好，欢迎来到宁波市江北区外滩街道社区卫生服务中心！我是AI医生，请问有什么可以帮助您的？</div>
-    </div>
-    <div class="chat-input-container">
-        <button class="voice-btn" id="voice-btn">🎤</button>
-        <input type="text" class="chat-input" id="chat-input" placeholder="请输入文字，我很愿意帮忙">
-        <button class="send-btn" id="send-btn">发送</button>
-    </div>
-    <div id="error-message" style="color: red; display: none;"></div> <!-- 错误消息区域 -->
-</div>
 
-<div class="modal" id="diagnosis-modal" style="display:none; position: fixed; top: 50%; left: 50%;
+<body>
+    <a href="personal-info.html" class="back-btn">⬅ 返回</a>
+    <div class="chat-container common-box">
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-bubble ai">您好，欢迎来到宁波市江北区外滩街道社区卫生服务中心！我是AI医生，请问有什么可以帮助您的？</div>
+        </div>
+        <div class="chat-input-container">
+            <button class="voice-btn" id="voice-btn">🎤</button>
+            <input type="text" class="chat-input" id="chat-input" placeholder="请输入文字，我很愿意帮忙">
+            <button class="send-btn" id="send-btn">发送</button>
+        </div>
+        <div id="error-message" style="color: red; display: none;"></div> <!-- 错误消息区域 -->
+    </div>
+
+    <div class="modal" id="diagnosis-modal"
+        style="display:none; position: fixed; top: 50%; left: 50%;
     transform: translate(-50%, -50%); background: white; padding: 20px 30px; border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    <h2 style="text-align: center; margin-bottom: 20px;">诊断结束</h2>
-    <table id="diagnosis-content" style="width: 100%; border-collapse: collapse; font-size: 14px; color: #333;">
-        <!-- JS 动态填充 -->
-    </table>
-    <div style="text-align: center; margin-top: 20px;">
-        <button id="close-modal" style="padding: 6px 16px; font-size: 14px; border: none; background-color: #007bff; color: white; border-radius: 6px; cursor: pointer;">关闭</button>
+        <h2 style="text-align: center; margin-bottom: 20px;">诊断结束</h2>
+        <table id="diagnosis-content" style="width: 100%; border-collapse: collapse; font-size: 14px; color: #333;">
+            <!-- JS 动态填充 -->
+        </table>
+        <div style="text-align: center; margin-top: 20px;">
+            <button id="close-modal"
+                style="padding: 6px 16px; font-size: 14px; border: none; background-color: #007bff; color: white; border-radius: 6px; cursor: pointer;">关闭</button>
+        </div>
     </div>
-</div>
 
-<!-- 遮罩层 -->
+    <!-- 遮罩层 -->
 
 
-<script src="../js/global.js"></script>
-<script src="../js/chat.js"></script>
-<script>
-    // 关闭modal的功能
-    document.getElementById('close-modal').addEventListener('click', () => {
-        document.getElementById('diagnosis-modal').style.display = 'none';
-    });
-</script>
+    <script src="../js/global.js?v=4"></script>
+    <script src="../js/chat.js?v=4"></script>
+    <script>
+        // 关闭modal的功能
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('diagnosis-modal').style.display = 'none';
+        });
+    </script>
 </body>
+
 </html>

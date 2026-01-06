@@ -21,8 +21,10 @@ public class NbAPIService {
     // 你的阿里百炼应用ID
     private static final String APP_ID = "0be01e06487d4071b9312dff372cfe83";
 
-    // 你的API Key，建议从环境变量读取
-    private static final String API_KEY = "sk-8f645201fae149e088c76b28e46008cb";
+    // 从环境变量读取API Key，如果没有则使用默认值（仅用于本地开发）
+    private static final String API_KEY = System.getenv("DASHSCOPE_API_KEY") != null 
+        ? System.getenv("DASHSCOPE_API_KEY") 
+        : "sk-8f645201fae149e088c76b28e46008cb";
 
     private final Application application = new Application();
 
@@ -72,7 +74,6 @@ public class NbAPIService {
 
             String rawText = result.getOutput().getText();
             ParsedResponse parsed = parseResponse(rawText);
-            System.out.println("rawText:"+rawText);
             return new ApiResponse(parsed.getStatus(), parsed.getText());
 
         } catch (ApiException | NoApiKeyException | InputRequiredException e) {
@@ -86,22 +87,30 @@ public class NbAPIService {
      * @return 包含状态码和纯文本的ParsedResponse对象
      */
     private ParsedResponse parseResponse(String rawText) {
-        if (rawText == null) {
-            return new ParsedResponse(0, "");
+        if (rawText == null || rawText.trim().isEmpty()) {
+            return new ParsedResponse(1, "");
         }
 
-        // 正则匹配开头的 (数字)
-        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("^\\((\\d)\\)\\s*(.*)$", java.util.regex.Pattern.DOTALL);
+        // 使用更灵活的正则：
+        // 1. 允许开头有任意非数字字符（如星号、空格等）
+        // 2. 匹配括在括号中的数字 (1) 或 (2)
+        // 3. 捕获之后的所有内容
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(".*?\\((\\d+)\\)\\s*(.*)", java.util.regex.Pattern.DOTALL);
         java.util.regex.Matcher matcher = pattern.matcher(rawText);
 
         if (matcher.find()) {
             int status = Integer.parseInt(matcher.group(1));
-            System.out.println("status:"+status);
-            String text = matcher.group(2);
+            String text = matcher.group(2).trim();
+            
+            // 进一步清理：如果文本末尾有 Markdown 的闭合符号（如单个星号），尝试清理
+            if (rawText.contains("*") && text.endsWith("*")) {
+                text = text.replaceAll("\\*+$", "").trim();
+            }
+            
             return new ParsedResponse(status, text);
         } else {
-            // 如果不匹配，默认状态0，返回原始文本
-            return new ParsedResponse(0, rawText);
+            // 如果完全没匹配到 (数字)，默认作为普通问询(1)解析，保证用户体验
+            return new ParsedResponse(1, rawText.trim());
         }
     }
 

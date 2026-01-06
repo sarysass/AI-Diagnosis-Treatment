@@ -10,9 +10,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // 允许所有路径
-                .allowedOrigins("http://127.0.0.1:8080","http://49.234.4.144:82","http://sheepblack.cn:82","http://localhost:82","https://aids.sheepblack.cn","http://localhost:8080") // 允许来自指定源的跨域请求
+                .allowedOriginPatterns("*") // 允许所有来源（包括 file:// 协议）
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 允许的 HTTP 方法
                 .allowedHeaders("*") // 允许的请求头
                 .allowCredentials(true); // 允许携带凭证
     }
+
 }

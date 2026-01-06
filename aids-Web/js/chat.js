@@ -90,6 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     diagnosisModal.style.display = 'block';
                 });
+
+                // 自动保存诊断结论到数据库
+                saveDiagnosisToDB(userId, data.text);
             } else {
                 // 其他状态也显示文本
                 aiLoadingBubble.innerHTML = data.text.replace(/\n/g, "<br>");
@@ -115,4 +118,26 @@ document.addEventListener("DOMContentLoaded", () => {
             sendMessage();
         }
     });
+
+    /**
+     * 将 AI 诊断结论自动保存到后端数据库
+     * @param {string} id 用户 ID
+     * @param {string} text 诊断文本
+     */
+    async function saveDiagnosisToDB(id, text) {
+        try {
+            const resp = await fetch(`${window.BASE_URL}/AddPatients/${id}/aiDiagnosis`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ aiDiagnosis: text })
+            });
+            if (resp.ok) {
+                console.log('AI 诊断结论已自动保存至数据库');
+            } else {
+                console.error('自动保存诊断结论失败:', resp.status);
+            }
+        } catch (err) {
+            console.error('自动保存诊断结论请求出错:', err);
+        }
+    }
 });

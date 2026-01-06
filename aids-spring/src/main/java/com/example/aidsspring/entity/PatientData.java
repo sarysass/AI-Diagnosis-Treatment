@@ -10,6 +10,10 @@ public class PatientData {
     private String tel;
     private Integer diagnosisid;
     private String info;
+    private String address;
+    private String diagnosisDate;
+    private String aiDiagnosis;
+    private String doctorDiagnosis;
 
     // Getters and Setters
 
@@ -67,5 +71,37 @@ public class PatientData {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDiagnosisDate() {
+        return diagnosisDate;
+    }
+
+    public void setDiagnosisDate(String diagnosisDate) {
+        this.diagnosisDate = diagnosisDate;
+    }
+
+    public String getAiDiagnosis() {
+        return aiDiagnosis;
+    }
+
+    public void setAiDiagnosis(String aiDiagnosis) {
+        this.aiDiagnosis = aiDiagnosis;
+    }
+
+    public String getDoctorDiagnosis() {
+        return doctorDiagnosis;
+    }
+
+    public void setDoctorDiagnosis(String doctorDiagnosis) {
+        this.doctorDiagnosis = doctorDiagnosis;
     }
 }
