@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>医生端查看页面</title>
     <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="../css/doctor-view.css">
+    <link rel="stylesheet" href="../css/doctor-view.css?v=5">
 </head>
 
 <body>
@@ -24,6 +24,13 @@
         </div>
 
         <button class="expand-sidebar-btn">⏵</button>
+
+        <!-- Search Input -->
+        <div class="search-container" style="padding: 10px;">
+            <input type="text" id="search-patient" placeholder="搜索患者姓名..."
+                style="width: 100%; padding: 5px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;">
+        </div>
+
         <!-- 动态渲染患者列表 -->
     </div>
 
@@ -54,7 +61,7 @@
             <div class="content-section" id="doctor-diagnosis-section">
                 <h2>医生诊断结果</h2>
                 <textarea id="doctor-diagnosis-input" placeholder="请输入医生诊断建议..."
-                    style="width:100%;height:80px;"></textarea>
+                    style="width:100%;height:100px;font-size: 1rem;"></textarea>
                 <button class="save-btn" id="save-doctor-info-btn">保存信息</button>
             </div>
         </div>

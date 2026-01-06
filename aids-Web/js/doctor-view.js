@@ -28,19 +28,39 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // --- 新增：从后端获取数据并动态渲染 ---
+  let allPatients = []; // Store globally for filtering
+
+  // Search functionality
+  const searchInput = document.getElementById('search-patient');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.trim().toLowerCase();
+      if (!searchTerm) {
+        renderSidebar(allPatients);
+        return;
+      }
+      const filtered = allPatients.filter(p => {
+        const name = (p.name || p.姓名 || '').toLowerCase();
+        return name.includes(searchTerm);
+      });
+      renderSidebar(filtered);
+    });
+  }
   async function loadPatients() {
     try {
       const response = await fetch(`${window.BASE_URL || ''}/AddPatients/all`);
       if (!response.ok) throw new Error('获取数据失败');
       const data = await response.ok ? await response.json() : [];
-      renderSidebar(data);
+      allPatients = data; // Save to global
+      renderSidebar(allPatients);
     } catch (error) {
       console.error('加载患者数据出错:', error);
       // 降级处理：尝试直接读取本地生成的 JSON (仅供调试或离线使用)
       try {
         const localResp = await fetch('../../data/diagnosis_data.json');
         const localData = await localResp.json();
-        renderSidebar(localData);
+        allPatients = localData; // Save to global
+        renderSidebar(allPatients);
       } catch (e) {
         console.error('本地加载也失败:', e);
       }
@@ -62,6 +82,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const sortedDates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
 
     sidebar.querySelectorAll('.date-item').forEach(el => el.remove());
+    sidebar.querySelectorAll('.no-results').forEach(el => el.remove()); // Clear previous no-results
+
+    if (patients.length === 0) {
+      const noResults = document.createElement('div');
+      noResults.className = 'no-results';
+      noResults.style.padding = '10px';
+      noResults.style.color = '#ccc';
+      noResults.innerHTML = '未找到匹配的患者';
+      sidebar.appendChild(noResults);
+      return;
+    }
 
     sortedDates.forEach(date => {
       const dateItem = document.createElement('div');
@@ -73,7 +104,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const patientList = document.createElement('div');
       patientList.className = 'patient-list';
-      patientList.style.display = 'none';
+
+      // Auto-expand if searching
+      const isSearching = document.getElementById('search-patient')?.value.trim().length > 0;
+      patientList.style.display = isSearching ? 'block' : 'none';
+      if (isSearching) {
+        dateToggle.querySelector('.arrow').textContent = '↓';
+      }
 
       groups[date].forEach(p => {
         const name = p.name || p.姓名;
